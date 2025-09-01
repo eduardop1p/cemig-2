@@ -30,7 +30,7 @@ export default async function puppeteerConfig({ userAgent }: Params) {
     )
     .use(StealthPlugin())
     .launch({
-      headless: false,
+      headless: true,
       defaultViewport: null,
       args: [
         '--no-sandbox',
