@@ -142,7 +142,7 @@ export default function QRCodePixStatic({
               </div>
               <button
                 type='button'
-                className='w-full h-10 rounded-[4px] bg-0027db flex items-center justify-center text-base font-medium text-white'
+                className='w-full h-12 rounded-[4px] bg-007d4a flex items-center justify-center text-base text-white'
                 onClick={handleCopy}
               >
                 Copiar código pix
