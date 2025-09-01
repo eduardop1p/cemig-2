@@ -21,7 +21,7 @@ const transactionsSchema = new Schema<TransactionsDocumentProtocol>({
 });
 
 const transactionsModel: Model<TransactionsDocumentProtocol> =
-  models.CemigTransactions ||
-  model<TransactionsDocumentProtocol>('CemigTransactions', transactionsSchema);
+  models.CemigTransactions2 ||
+  model<TransactionsDocumentProtocol>('CemigTransactions2', transactionsSchema);
 
 export default transactionsModel;

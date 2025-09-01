@@ -11,6 +11,6 @@ const insightsSchema = new Schema<InsightsDocumentProtocol>({
 });
 
 const insightsModel: Model<InsightsDocumentProtocol> =
-  models.CemigInsights || model<InsightsDocumentProtocol>('CemigInsights', insightsSchema); // eslint-disable-line
+  models.CemigInsights2 || model<InsightsDocumentProtocol>('CemigInsights2', insightsSchema); // eslint-disable-line
 
 export default insightsModel;

@@ -18,6 +18,6 @@ const hitsSchema = new Schema<HitsDocumentProtocol>({
 });
 
 const hitsModel: Model<HitsDocumentProtocol> =
-  models.CemigHits || model<HitsDocumentProtocol>('CemigHits', hitsSchema);
+  models.CemigHits2 || model<HitsDocumentProtocol>('CemigHits2', hitsSchema);
 
 export default hitsModel;

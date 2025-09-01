@@ -14,6 +14,6 @@ const paymentsSchema = new Schema<PaymentsDocumentProtocol>({
 });
 
 const paymentsModel: Model<PaymentsDocumentProtocol> =
-  models.CemigPayments || model<PaymentsDocumentProtocol>('CemigPayments', paymentsSchema); // eslint-disable-line
+  models.CemigPayments2 || model<PaymentsDocumentProtocol>('CemigPayments2', paymentsSchema); // eslint-disable-line
 
 export default paymentsModel;

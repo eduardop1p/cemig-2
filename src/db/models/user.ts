@@ -44,6 +44,6 @@ const usersSchema = new Schema<UserDocumentProtocol>({
 });
 
 const usersModel: Model<UserDocumentProtocol> =
-  models.CemigUsers || model<UserDocumentProtocol>('CemigUsers', usersSchema);
+  models.CemigUsers2 || model<UserDocumentProtocol>('CemigUsers2', usersSchema);
 
 export default usersModel;
