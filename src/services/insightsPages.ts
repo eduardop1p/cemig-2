@@ -1,3 +1,3 @@
-const insightsPages = ['Home', 'Faturas'] as const;
+const insightsPages = ['Home', 'Faturas', 'Instalações'] as const;
 
 export default insightsPages;

@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import Image from 'next/image';
 
+import Insights from '@/components/admin/insights';
 import Footer from '@/components/footer';
 import FormLogin from '@/components/forms/formLogin';
 
@@ -24,6 +25,7 @@ export default function page() {
       <main className='w-full bg-white min-h-screen py-[100px] max-[550px]:pt-[150px] max-[550px]:pb-[50px] max-[550px]:items-start flex items-center justify-center'>
         <FormLogin />
       </main>
+      <Insights page='Home' />
       <Footer />
     </>
   );

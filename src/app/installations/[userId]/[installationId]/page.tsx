@@ -2,6 +2,7 @@ export const dynamic = 'force-dynamic';
 
 import { redirect } from 'next/navigation';
 
+import Insights from '@/components/admin/insights';
 import Installations from '@/components/installations';
 import Footer from '@/components/invoices/footer';
 import Header from '@/components/invoices/header';
@@ -98,6 +99,7 @@ export default async function Page({ params }: Props) {
           />
         </div>
       </main>
+      <Insights page='Instalações' />
       <Footer />
     </>
   );

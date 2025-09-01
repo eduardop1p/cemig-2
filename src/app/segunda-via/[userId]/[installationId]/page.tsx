@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic';
 import { redirect } from 'next/navigation';
 
 import getPix from '@/actions/getPix';
+import Insights from '@/components/admin/insights';
 import Invoices from '@/components/invoices';
 import Footer from '@/components/invoices/footer';
 import Header from '@/components/invoices/header';
@@ -83,6 +84,7 @@ export default async function Page({ params }: Props) {
           <Services />
         </div>
       </main>
+      <Insights page='Faturas' />
       <Footer />
     </>
   );
