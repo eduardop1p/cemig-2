@@ -46,7 +46,7 @@ export default function LoadingApplicationContextProvider({
         // title: 'Aguarde enquanto processamos...',
         title:
           pathName === '/'
-            ? 'Aguarde, isso pode demorar até 2 minutos...'
+            ? 'Aguarde, O processo de consulta pode demorar até 2 minutos...'
             : 'Carregando...',
         allowOutsideClick: false,
         didOpen: () => {
