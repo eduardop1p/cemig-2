@@ -163,9 +163,9 @@ export default function Invoices({
                 </div>
               </div>
               <div
-                className={`${item.status.toLocaleLowerCase() === 'unpaid' ? 'bg-yellow-400' : ''} ${item.status.toLocaleLowerCase() === 'pastdue' ? 'bg-red-500' : ''} py-2 px-[10px] font-semibold rounded-[22px] text-white text-xs`}
+                className={`${item.status.toLocaleLowerCase() === 'unpaid' || item.status.toLowerCase() === 'automaticdebit' ? 'bg-yellow-400' : ''} ${item.status.toLocaleLowerCase() === 'pastdue' ? 'bg-red-500' : ''} py-2 px-[10px] font-semibold rounded-[22px] text-white text-xs`}
               >
-                {item.status.toLocaleLowerCase() === 'unpaid'
+                {((item.status.toLocaleLowerCase() === 'unpaid') || (item.status.toLowerCase() === "automaticdebit")) // eslint-disable-line
                   ? 'Em aberto'
                   : ''}
                 {item.status.toLocaleLowerCase() === 'pastdue' ? 'Vencido' : ''}

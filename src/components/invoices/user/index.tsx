@@ -17,7 +17,7 @@ interface Props {
 export default function User({ className, userName, userId }: Props) {
   const [show, setShow] = useState(false);
   const container = useRef<HTMLDivElement | null>(null);
-  const firstLettersName = userName.slice(0, 2);
+  const firstName = userName.split(' ')[0];
 
   useEffect(() => {
     const onmousedown = (event: Event) => {
@@ -50,7 +50,7 @@ export default function User({ className, userName, userId }: Props) {
           </svg>
         </div>
         <span className='text-white text-sm uppercase font-semibold'>
-          {firstLettersName}
+          {firstName}
         </span>
         <IoIosArrowDown size={20} fill='#fff' className='flex-none' />
       </div>

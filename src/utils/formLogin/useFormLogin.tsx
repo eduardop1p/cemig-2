@@ -27,7 +27,7 @@ export default function useFormLogin() {
     try {
       setIsLoading(true);
       const authorization = await encryptData(body);
-      const res = await fetch('/api/scrape2', {
+      const res = await fetch('/api/scrape', {
         method: 'post',
         body: JSON.stringify(body),
         headers: {

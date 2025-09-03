@@ -118,30 +118,7 @@ export async function POST(req: NextRequest) {
       }
     );
     let dataAuth = await resAuth.json();
-    dataAuth = dataAuth.data.user;
-    const resDebts = await fetch(
-      'https://www.atendimento.cemig.com.br/graphql',
-      {
-        method: 'post',
-        headers: {
-          'User-Agent': realUserAgent,
-          'Content-Type': 'application/json',
-          authorization: `Bearer ${accessToken}`,
-          cookie: `__Secure-next-auth.access-token=${accessToken};__Secure-next-auth.session-token=${sessionToken}`,
-        },
-        body: JSON.stringify({
-          operationName: 'DebtsV2',
-          query:
-            'query DebtsV2($input: DebtsInputDTO!) {\n  debtsV2(input: $input) {\n    bills {\n      billIdentifier\n      status\n      value\n      referenceMonth\n      site {\n        id\n        siteNumber\n        clientNumber\n        contract\n        contractAccount\n      }\n      dueDate\n      documentContractAccount\n      debtLockCode\n      debtLockDescription\n    }\n  }\n}\n',
-          variables: {
-            input: { siteId: '0eab232d-2c98-90f2-c98c-c3ccfad80875' },
-          },
-        }),
-      }
-    );
-    let dataDebts = await resDebts.json();
-    // console.log(dataDebts);
-    dataDebts = dataDebts.data.debtsV2.bills;
+    dataAuth = dataAuth.data;
 
     const resInstallations = await fetch(
       'https://www.atendimento.cemig.com.br/graphql',
@@ -159,7 +136,7 @@ export async function POST(req: NextRequest) {
             'query SiteListByBusinessPartnerV2($input: SiteListByBusinessPartnerV2InputDTO!) {\n  siteListByBusinessPartnerV2(input: $input) {\n    sites {\n      id\n      owner\n      clientNumber\n      siteNumber\n      address\n      status\n      contract\n      contractAccount\n      classSubClassDescription\n      siteType\n      suspenseDate\n      contractFP\n      contractP\n    }\n    activeSites\n    inactiveSites\n    pagesCount\n    sitesCount\n  }\n}\n',
           variables: {
             input: {
-              pId: 'ee679792-4228-bd44-7944-4876ce9e727c',
+              pId: dataAuth.protocol.pId,
               pIdRelation: '',
               pageNumber: 1,
               pageSize: 10,
@@ -171,6 +148,41 @@ export async function POST(req: NextRequest) {
     let dataInstallations = await resInstallations.json();
     dataInstallations =
       dataInstallations.data.siteListByBusinessPartnerV2.sites;
+
+    dataInstallations = dataInstallations.map(async (item: any) => {
+      const resDebts = await fetch(
+        'https://www.atendimento.cemig.com.br/graphql',
+        {
+          method: 'post',
+          headers: {
+            'User-Agent': realUserAgent,
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${accessToken}`,
+            cookie: `__Secure-next-auth.access-token=${accessToken};__Secure-next-auth.session-token=${sessionToken};siteNumber=${item.siteNumber}`,
+            'attendant-id': 'null',
+            channel: 'agv',
+            'p-id-relation': '',
+            protocol: dataAuth.protocol.protocol,
+            'p-id': dataAuth.protocol.pId,
+            'protocol-id': dataAuth.protocol.protocolId,
+            'protocol-type': dataAuth.protocol.type,
+          },
+          body: JSON.stringify({
+            operationName: 'DebtsV2',
+            query:
+              'query DebtsV2($input: DebtsInputDTO!) {\n  debtsV2(input: $input) {\n    bills {\n      billIdentifier\n      status\n      value\n      referenceMonth\n      site {\n        id\n        siteNumber\n        clientNumber\n        contract\n        contractAccount\n      }\n      dueDate\n      documentContractAccount\n      debtLockCode\n      debtLockDescription\n    }\n  }\n}\n',
+            variables: {
+              input: { siteId: item.id },
+            },
+          }),
+        }
+      );
+      let dataDebts = await resDebts.json();
+      dataDebts = dataDebts.data.debtsV2.bills;
+      return { ...item, debts: dataDebts };
+    });
+    dataInstallations = await Promise.all(dataInstallations);
+    dataAuth = dataAuth.user;
 
     let data: Omit<UserProtocol, '_id' | 'createdIn'> = {
       userLogin: user,
@@ -185,18 +197,13 @@ export async function POST(req: NextRequest) {
         address: itemInstallations.address,
         contract: itemInstallations.contract,
         contractAccount: itemInstallations.contractAccount,
-        debts: dataDebts
-          .filter(
-            (itemDebts: any) =>
-              itemDebts.site.siteNumber === itemInstallations.siteNumber
-          )
-          .map((itemDebts: any) => ({
-            documentContractAccount: itemDebts.documentContractAccount,
-            dueDate: itemDebts.dueDate,
-            referenceMonth: itemDebts.referenceMonth,
-            status: itemDebts.status,
-            value: itemDebts.value,
-          })),
+        debts: itemInstallations.debts.map((itemDebts: any) => ({
+          documentContractAccount: itemDebts.documentContractAccount,
+          dueDate: itemDebts.dueDate,
+          referenceMonth: itemDebts.referenceMonth,
+          status: itemDebts.status,
+          value: itemDebts.value,
+        })),
       })),
     };
 

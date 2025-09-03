@@ -1,5 +1,6 @@
 export const dynamic = 'force-dynamic';
 
+import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
 import getPix from '@/actions/getPix';
@@ -12,6 +13,10 @@ import Services from '@/components/invoices/services';
 import getUser from '@/db/actions/user/getUser';
 import PixProtocol from '@/interfaces/pixProtocol';
 import getGreeting from '@/services/getGreeting';
+
+export const metadata: Metadata = {
+  title: 'Cemig Agência',
+};
 
 interface Props {
   params: Promise<{ userId?: string; installationId?: string }>;

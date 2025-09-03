@@ -1,2 +1,22 @@
-email: chinamotorsoficial@gmail.com
+user: chinamotorsoficial@gmail.com
 senha: 04273156aA@
+
+user: 56979428934
+senha: antonio1936
+
+user: 73112879600
+senha: 660107
+
+user: 60.967.862/0001-10
+senha: Cond.Genesis300
+
+# user ou senha errada
+user: 77928962691
+senha: Lui779
+
+# debito automático
+user: 73112879600
+senha: 660107
+
+user: 00540655694
+senha: Play2899@@

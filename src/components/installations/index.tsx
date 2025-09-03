@@ -65,9 +65,16 @@ export default function Installations({
         {stateInstallations.map((item, i) => (
           <a
             key={i}
-            className='w-full cursor-pointer flex items-start gap-4 bg-white p-4 rounded-[6px]'
-            href={`/installations/${userId}/${item.siteNumber}`}
+            className={`${item.status !== 'Active' ? 'opacity-50 pointer-events-none' : ''} w-full cursor-pointer flex items-start gap-4 bg-white p-4 rounded-[6px] relative`}
+            href={`/segunda-via/${userId}/${item.siteNumber}`}
           >
+            <span
+              className={`${item.status === 'Active' ? 'bg-green-500' : ''} ${item.status === 'Suspended' ? 'bg-yellow-400' : ''} ${item.status === 'Terminated' ? 'bg-red-500' : ''} text-white py-1 px-2 z-[5] rounded-[22px] absolute top-3 right-3 text-xs font-medium`}
+            >
+              {item.status === 'Active' ? 'Ativa' : ''}
+              {item.status === 'Suspended' ? 'Suspensa' : ''}
+              {item.status === 'Terminated' ? 'Encerrada' : ''}
+            </span>
             <input
               type='radio'
               name='installation'

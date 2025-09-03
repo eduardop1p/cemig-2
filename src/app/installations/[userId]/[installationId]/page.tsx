@@ -1,5 +1,6 @@
 export const dynamic = 'force-dynamic';
 
+import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
 import Insights from '@/components/admin/insights';
@@ -9,6 +10,10 @@ import Header from '@/components/invoices/header';
 import Nav from '@/components/invoices/nav';
 import getUser from '@/db/actions/user/getUser';
 import validationCPF from '@/services/validationCPF';
+
+export const metadata: Metadata = {
+  title: 'Cemig Agência',
+};
 
 interface Props {
   params: Promise<{ userId?: string; installationId?: string }>;
