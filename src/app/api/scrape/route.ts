@@ -9,6 +9,7 @@ import puppeteerConfig from '@/config/puppeteerConfig';
 import createUser from '@/db/actions/user/createUser';
 import ScrapeError from '@/errors/scrapeError';
 import capsolver from '@/functions/capsolver';
+import getText from '@/functions/getText';
 import UserProtocol from '@/interfaces/userProtocol';
 
 interface BodyParams {
@@ -78,6 +79,17 @@ export async function POST(req: NextRequest) {
         btn.click();
       }
     }, token);
+
+    await page.waitForSelector('.modal-backdrop.fade.in', { hidden: true });
+    try {
+      await page.waitForSelector('#spnAlertasGerais', { timeout: 2000 });
+      const textElement = await getText(page, '#spnAlertasGerais');
+      if (textElement) throw new ScrapeError(textElement, 401);
+    } catch (err) {
+      if (err instanceof ScrapeError) {
+        throw new ScrapeError(err.message, 401);
+      }
+    }
 
     async function watchCookie(cookieName: string) {
       const start = Date.now();
